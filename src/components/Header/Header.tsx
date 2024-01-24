@@ -33,6 +33,7 @@ export const Header: FC = () => {
 
   useEffect(() => {
     if (currentPathname !== pathname) {
+      setCurrentPathname(pathname);
       setMenuOpen(false);
     }
   }, [pathname]);
