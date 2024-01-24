@@ -11,9 +11,12 @@ export const Form = styled.form`
   padding: 32px 24px;
   margin-top: ${({ theme }) => theme.spacing.md};
   width: 100%;
+  height: 100vh;
+  overflow: auto;
 
   @media (min-width: ${breakpoints.md}) {
     max-width: 744px;
     padding: 24px 32px;
+    height: auto;
   }
 `;
