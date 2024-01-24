@@ -8,7 +8,6 @@ import { getToken } from '@/utils/services/auth';
 
 const request = async (params: AxiosRequestConfig) => {
   const headers: RawAxiosRequestHeaders | AxiosHeaders = {
-    'Cache-Control': 'no-cache',
     Accept: '*',
     'Content-Type': 'text/plain; charset=UTF-8',
   };
