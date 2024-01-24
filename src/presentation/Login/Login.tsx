@@ -12,7 +12,7 @@ import { useAppDispatch } from '@/hook/store';
 import { LoginErrorType } from '@/models/errors';
 import { RequestStatus } from '@/models/iRequest';
 import { loginSchema } from '@/utils/schemas';
-import { login } from '@/utils/services/auth';
+import { isAuthenticated, login, setUser } from '@/utils/services/auth';
 
 export const LoginPresentation: FC = () => {
   const navigate = useNavigate();
@@ -21,6 +21,12 @@ export const LoginPresentation: FC = () => {
   const { status, message, data } = useSigIn();
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate('/produtos');
+    }
+  }, []);
 
   useEffect(() => {
     if (status === RequestStatus.error) {
@@ -33,8 +39,9 @@ export const LoginPresentation: FC = () => {
 
     if (status === RequestStatus.success && !isEmpty(data)) {
       login(data.token);
+      setUser(data);
       dispatch(clearSigIn());
-      navigate('/produto');
+      navigate('/produtos');
     }
   }, [status, message, data]);
 
@@ -60,7 +67,7 @@ export const LoginPresentation: FC = () => {
   });
 
   return (
-    <Container>
+    <Container style={{ height: '100vh' }}>
       <Typography variant="title" align="center" spacing="xs">
         Faça seu Login
       </Typography>
