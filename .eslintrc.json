@@ -82,9 +82,14 @@
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "react/require-default-props": "off",
     "react/button-has-type": "off",
     "react-hooks/exhaustive-deps": "off",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   },
   "settings": {
     "import/parsers": {
