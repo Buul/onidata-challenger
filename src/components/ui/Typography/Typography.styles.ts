@@ -13,22 +13,23 @@ const TypographyBase = css<TypographyStyled>`
 const variants = {
   title: () => css`
     font-weight: ${({ theme }) => theme.fontWeight.bold};
-    font-size: ${({ theme }) => theme.fontSize.base};
-    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    line-height: ${({ theme }) => theme.lineHeight.base};
+    color: ${({ theme }) => theme.colors.text.dark};
 
-    @media (min-width: ${breakpoints.md}) {
+    /* @media (min-width: ${breakpoints.md}) {
       font-size: ${({ theme }) => theme.fontSize.lg};
-    }
+    } */
   `,
   subTitle: () => css`
     font-weight: ${({ theme }) => theme.fontWeight.base};
-    font-size: ${({ theme }) => theme.fontSize.xs};
-    line-height: ${({ theme }) => theme.lineHeight.base};
-    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSize.base};
+    line-height: ${({ theme }) => theme.lineHeight.high};
+    color: ${({ theme }) => theme.colors.text.dark};
 
-    @media (min-width: ${breakpoints.md}) {
+    /* @media (min-width: ${breakpoints.md}) {
       font-size: ${({ theme }) => theme.fontSize.md};
-    }
+    } */
   `,
 
   menu: () => css`

@@ -1,12 +1,12 @@
 import { AxiosError } from 'axios';
 import { createAction, createAsyncAction } from 'typesafe-actions';
 
-import { UserRequest } from './types';
+import { User } from './types';
 
-export const createUser = createAsyncAction(
-  'CREATE_USER_REQUEST',
-  'CREATE_USER_SUCCESS',
-  'CREATE_USER_ERROR'
-)<UserRequest, undefined, Error | AxiosError>();
+export const getUserInfo = createAsyncAction(
+  'GET_USER_INFO_USER_REQUEST',
+  'GET_USER_INFO_USER_SUCCESS',
+  'GET_USER_INFO_USER_ERROR'
+)<undefined, User, Error | AxiosError>();
 
-export const clearUser = createAction('CLEAR_USER')();
+export const clearUserInfo = createAction('CLEAR_USER_INFO')();

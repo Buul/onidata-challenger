@@ -13,10 +13,14 @@ export const Wrapper = styled.div`
   padding-top: 100px;
   position: absolute;
   flex-direction: column;
-  background-color: #24396d;
+  background-color: #ffffff;
 
   h5 {
     margin: 20px 0;
+  }
+
+  ul {
+    width: 220px;
   }
 
   @media (min-width: ${breakpoints.md}) {

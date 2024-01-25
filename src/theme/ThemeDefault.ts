@@ -47,19 +47,19 @@ const theme: ThemeType = {
     xs: '0.625rem',
     sm: '0.75rem',
     md: '1rem',
-    base: '1.4rem',
-    lg: '2.6rem',
+    base: '1.125rem', // 18px
+    lg: '2rem',
     xl: '3.2rem',
     heading1: '3.2rem',
     heading2: '4.0rem',
   },
   lineHeight: {
-    base: '140%',
-    high: '44px',
+    base: 'normal',
+    high: '140%',
   },
   fontFamily: {
-    base: 'Open Sans',
-    secondary: 'Roboto',
+    base: 'Roboto',
+    secondary: '"Source Sans 3", sans-serif;',
     inter: 'Inter',
     mont: 'Montserrat',
   },
@@ -76,11 +76,11 @@ const theme: ThemeType = {
   spacing: {
     xxs: '0.25rem',
     xs: '0.05rem',
-    sm: '1rem',
-    md: '1.5rem',
-    base: '2rem',
+    sm: '1rem', // 16px
+    md: '1.125rem', // 18px
+    base: '2rem', // 32px
     lg: '2.5rem',
-    xl: '3.5rem',
+    xl: '3rem', // 48px
     xxl: '4.5rem',
     large: '5rem',
     superLarge: '6rem',

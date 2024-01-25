@@ -8,15 +8,14 @@ import { getToken } from '@/utils/services/auth';
 
 const request = async (params: AxiosRequestConfig) => {
   const headers: RawAxiosRequestHeaders | AxiosHeaders = {
-    Accept: '*',
-    'Content-Type': 'text/plain; charset=UTF-8',
+    'Content-Type': 'application/json',
+    Accept: '*/*',
   };
 
   try {
     const token = getToken();
-
     if (token) {
-      headers['x-person-token'] = token;
+      headers.AUTHORIZATION = `Bearer ${token}`;
     }
   } catch (ex) {
     if (ex !== 'No current user') {

@@ -50,7 +50,6 @@ export const AlertWrapper = styled.div<AlertStyled>`
 `;
 
 export const AlertMessage = styled.span<AlertStyled>`
-  font-family: ${({ theme }) => theme.fontFamily.secondary};
   font-size: ${({ theme }) => theme.fontSize.md};
   margin-left: ${({ theme }) => theme.spacing.sm};
   ${({ variant }) => variantMessage[variant || 'info']};

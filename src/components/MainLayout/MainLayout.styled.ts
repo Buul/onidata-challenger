@@ -19,6 +19,8 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  background-color: #e9e9ec;
+  min-height: calc(100vh - 80px);
 
   @media (min-width: ${breakpoints.md}) {
     padding: 50px;

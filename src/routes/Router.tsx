@@ -1,22 +1,30 @@
-import { ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { MainLayout, PrivateRoute } from '@/components';
+import { getUserInfo } from '@/flux/modules/user/actions';
+import { useAppDispatch } from '@/hook/store';
 import {
+  HomePresentation,
   LoginPresentation,
   PageNotFoundPresentation,
-  ProductFormPresentation,
-  ProductsPresentation,
-  ProductViewPresentation,
-  RegisterPresentation,
 } from '@/presentation';
+import { isAuthenticated } from '@/utils/services/auth';
 
 type RenderMultiRoutesPayload = {
   element: ReactNode;
   paths: string[];
 };
 
-const Router: React.FC = () => {
+const Router: FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      dispatch(getUserInfo.request());
+    }
+  }, []);
+
   const renderMultiRoutes = ({
     element: Element,
     paths,
@@ -29,58 +37,31 @@ const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="*" element={<PageNotFoundPresentation />} />
-      <Route path="/registrar" element={<RegisterPresentation />} />
+
       {renderMultiRoutes({
         paths: ['/', '/sign'],
         element: <LoginPresentation />,
       })}
 
       <Route
-        path="/produtos"
+        path="/home"
         element={
           <PrivateRoute>
             <MainLayout>
-              <ProductsPresentation />
-            </MainLayout>
-          </PrivateRoute>
-        }
-      />
-
-      <Route
-        path="/adicionar-produto"
-        element={
-          <PrivateRoute>
-            <MainLayout>
-              <ProductFormPresentation />
-            </MainLayout>
-          </PrivateRoute>
-        }
-      />
-
-      <Route
-        path="/editar-produto"
-        element={
-          <PrivateRoute>
-            <MainLayout>
-              <ProductFormPresentation />
-            </MainLayout>
-          </PrivateRoute>
-        }
-      />
-
-      <Route
-        path="/visualizar-produto"
-        element={
-          <PrivateRoute>
-            <MainLayout>
-              <ProductViewPresentation />
+              <HomePresentation />
             </MainLayout>
           </PrivateRoute>
         }
       />
 
       {renderMultiRoutes({
-        paths: ['/home', '/configuracoes', '/usuarios'],
+        paths: [
+          '/alunos',
+          '/pais',
+          '/funcionarios',
+          '/funcionarios',
+          '/relatorios',
+        ],
         element: (
           <PrivateRoute>
             <MainLayout>

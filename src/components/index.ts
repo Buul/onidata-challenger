@@ -1,4 +1,5 @@
 export { Container } from './Container/Container';
+export { Divider } from './Divider/Divider';
 export { Form } from './Form/Form';
 export { Header } from './Header/Header';
 export { MainLayout } from './MainLayout/MainLayout';

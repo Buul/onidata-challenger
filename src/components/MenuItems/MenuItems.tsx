@@ -1,72 +1,111 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
-import PersonSharpIcon from '@mui/icons-material/PersonSharp';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ViewInArSharpIcon from '@mui/icons-material/ViewInArSharp';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import {
-  Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import { find } from 'lodash';
 
 import { logout } from '@/utils/services/auth';
 
+const COLOR_UNSELECTED = '#525252';
+const COLOR_SELECTED = '#4379C1';
+
 export const MenuItems: FC = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const menu = [
+    {
+      id: 1,
+      title: 'Home',
+      icon: <HomeIcon />,
+      path: '/home',
+    },
+    {
+      id: 2,
+      title: 'Alunos',
+      icon: <AccountBoxOutlinedIcon />,
+      path: '/alunos',
+    },
+    {
+      id: 3,
+      title: 'Pais',
+      icon: <PersonOutlinedIcon />,
+      path: '/pais',
+    },
+    {
+      id: 4,
+      title: 'Funcionários',
+      icon: <BadgeOutlinedIcon />,
+      path: '/funcionarios',
+    },
+    {
+      id: 5,
+      title: 'Relatórios',
+      icon: <AssessmentOutlinedIcon />,
+      path: '/relatorios',
+    },
+    {
+      id: 6,
+      title: 'Sair',
+      icon: <LogoutIcon />,
+      path: '/sair',
+    },
+  ];
+
+  const menuSelected = find(menu, ['path', pathname]);
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
+  const getColor = (id: number) => {
+    if (menuSelected) {
+      return (menuSelected.id !== id && COLOR_UNSELECTED) || COLOR_SELECTED;
+    }
+    return COLOR_UNSELECTED;
+  };
+
+  const menuAction = (path: string) => {
+    if (path === '/sair') {
+      handleLogout();
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <List>
-      <ListItem disablePadding>
-        <ListItemButton onClick={() => navigate('/home')}>
-          <ListItemIcon style={{ color: '#ffffff' }}>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" style={{ color: '#ffffff' }} />
-        </ListItemButton>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton onClick={() => navigate('/produtos')}>
-          <ListItemIcon style={{ color: '#ffffff' }}>
-            <ViewInArSharpIcon />
-          </ListItemIcon>
-          <ListItemText primary="Produtos" style={{ color: '#ffffff' }} />
-        </ListItemButton>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton onClick={() => navigate('/usuarios')}>
-          <ListItemIcon style={{ color: '#ffffff' }}>
-            <PersonSharpIcon />
-          </ListItemIcon>
-          <ListItemText primary="Usuários" style={{ color: '#ffffff' }} />
-        </ListItemButton>
-      </ListItem>
-      <Divider sx={{ borderColor: '#ffffff' }} />
-      <ListItem disablePadding>
-        <ListItemButton onClick={() => navigate('/configuracoes')}>
-          <ListItemIcon style={{ color: '#ffffff' }}>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Configuração" style={{ color: '#ffffff' }} />
-        </ListItemButton>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton onClick={handleLogout}>
-          <ListItemIcon style={{ color: '#ffffff' }}>
-            <LogoutIcon />
-          </ListItemIcon>
-          <ListItemText primary="Sair" style={{ color: '#ffffff' }} />
-        </ListItemButton>
-      </ListItem>
+      {menu.map(item => (
+        <ListItem disablePadding key={item.id}>
+          <ListItemButton onClick={() => menuAction(item.path)}>
+            <ListItemIcon style={{ color: getColor(item.id), minWidth: 40 }}>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText
+              primary={item.title}
+              style={{ color: getColor(item.id) }}
+            />
+            {menuSelected && menuSelected.id !== item.id && (
+              <ListItemIcon style={{ color: getColor(item.id), minWidth: 0 }}>
+                <ArrowForwardIosOutlinedIcon />
+              </ListItemIcon>
+            )}
+          </ListItemButton>
+        </ListItem>
+      ))}
     </List>
   );
 };

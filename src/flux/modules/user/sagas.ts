@@ -1,17 +1,18 @@
+import { AxiosError } from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { createUser } from './actions';
-import { create } from './service';
+import { getUserInfo } from './actions';
+import { getUser } from './service';
+import { UserResponse } from './types';
 
-function* createUserSaga({
-  payload,
-}: ReturnType<typeof createUser.request>): Generator {
+function* getUserInfoSaga(): Generator {
   try {
-    yield call(create, payload);
-    yield put(createUser.success());
+    const response: UserResponse = (yield call(getUser)) as UserResponse;
+    yield put(getUserInfo.success(response.data));
   } catch (err) {
-    yield yield put(createUser.success());
+    const errors = err as Error | AxiosError;
+    yield put(getUserInfo.failure(errors));
   }
 }
 
-export default [takeEvery(createUser.request, createUserSaga)];
+export default [takeEvery(getUserInfo.request, getUserInfoSaga)];

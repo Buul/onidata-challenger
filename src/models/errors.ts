@@ -8,6 +8,7 @@ export type GenericError = {
 export enum GenericErrorType {
   NoResponseException = 'NoResponseException',
   Request404 = 'Request failed with status code 404',
+  Request401 = 'Request failed with status code 401',
 }
 
 export enum LoginErrorType {

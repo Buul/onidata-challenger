@@ -1,18 +1,21 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Button, FormControl, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { isEmpty } from 'lodash';
 
-import { Alert, Container, Form, Typography } from '@/components';
+import LogoGov from '@/assets/logos/gov.svg';
+import { Alert, Container, Divider, Form, Typography } from '@/components';
 import { clearSigIn, sigIn } from '@/flux/modules/sigIn/actions';
 import { useSigIn } from '@/hook/selectors/sigInHooks';
 import { useAppDispatch } from '@/hook/store';
-import { LoginErrorType } from '@/models/errors';
+import { GenericErrorType } from '@/models/errors';
 import { RequestStatus } from '@/models/iRequest';
 import { loginSchema } from '@/utils/schemas';
-import { isAuthenticated, login, setUser } from '@/utils/services/auth';
+import { isAuthenticated, login } from '@/utils/services/auth';
+
+import * as S from './Login.styled';
 
 export const LoginPresentation: FC = () => {
   const navigate = useNavigate();
@@ -24,13 +27,13 @@ export const LoginPresentation: FC = () => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      navigate('/produtos');
+      navigate('/home');
     }
   }, []);
 
   useEffect(() => {
     if (status === RequestStatus.error) {
-      if (message === LoginErrorType.NotAuthorizedException) {
+      if (message === GenericErrorType.Request401) {
         setErrorMessage('Email ou senha inválidos!');
       } else {
         setErrorMessage('Falha ao tentar efetuar o login');
@@ -38,10 +41,9 @@ export const LoginPresentation: FC = () => {
     }
 
     if (status === RequestStatus.success && !isEmpty(data)) {
-      login(data.token);
-      setUser(data);
+      login(data.access);
       dispatch(clearSigIn());
-      navigate('/produtos');
+      navigate('/home');
     }
   }, [status, message, data]);
 
@@ -67,30 +69,30 @@ export const LoginPresentation: FC = () => {
   });
 
   return (
-    <Container style={{ height: '100vh' }}>
-      <Typography variant="title" align="center" spacing="xs">
-        Faça seu Login
-      </Typography>
+    <Container>
+      <S.LogoWrapper>
+        <img alt="logo gov" src={LogoGov} />
+      </S.LogoWrapper>
 
-      <Typography variant="subTitle" align="center">
-        Informe seu email e senha para ter acesso ao conteúdo.
-      </Typography>
       <Form onSubmit={formik.handleSubmit}>
-        <FormControl>
-          <TextField
-            margin="normal"
-            error={
-              (formik.touched.email && formik.errors.email && true) || false
-            }
-            id="email"
-            label="Email"
-            placeholder="Digite seu email"
-            helperText={(formik.touched.email && formik.errors.email) || ''}
-            variant="outlined"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-        </FormControl>
+        <Typography variant="title" align="center">
+          Entrar
+        </Typography>
+        <Typography variant="subTitle" align="center">
+          Insira seus dados para autenticar na plataforma
+        </Typography>
+        <Divider />
+        <TextField
+          margin="normal"
+          error={(formik.touched.email && formik.errors.email && true) || false}
+          id="email"
+          label="Email"
+          placeholder="Digite seu email"
+          helperText={(formik.touched.email && formik.errors.email) || ''}
+          variant="outlined"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
         <TextField
           margin="normal"
           error={
@@ -114,9 +116,8 @@ export const LoginPresentation: FC = () => {
             margin: '20px 0',
           }}
         >
-          Continuar
+          Acessar
         </LoadingButton>
-        <Button onClick={() => navigate('/registrar')}>Registre-se</Button>
         {errorMessage && (
           <Alert spacing="md" fullWidth variant="error">
             {errorMessage}

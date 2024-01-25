@@ -20,6 +20,7 @@ export default createGlobalStyle<{ theme: ThemeType }>`
   body {
     font-family: ${({ theme }) => theme.fontFamily.base};
     font-size: ${({ theme }) => theme.fontSize.sm};
+    color: ${({ theme }) => theme.colors.text.dark};
     height: 100%;
   }
   b,

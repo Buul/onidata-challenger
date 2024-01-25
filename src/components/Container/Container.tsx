@@ -4,9 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.primary};
-  height: calc(100vh - 60px);
+  background-color: #e9e9ec;
+  height: 100vh;
   align-items: center;
-  justify-content: center;
   padding-top: 10px;
 `;
